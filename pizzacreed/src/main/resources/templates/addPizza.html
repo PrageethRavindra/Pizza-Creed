@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Pizza | Pizza Creed</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lemon&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: url('/images/add-pizza.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 600px;
+            margin-left: 0;
+        }
+
+        .text-primary {
+            color: #0d6efd !important;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 5px rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .navbar-nav .nav-link {
+            color: #0d6efd;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            padding: 0.75rem 1.25rem;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #0d6efd;
+            color: #ffffff;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #0d6efd;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover::before {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+
+        .alert {
+            border-radius: 5px;
+            padding: 1rem;
+        }
+
+        h1 {
+            font-family: 'Roboto', sans-serif;
+            color: #ff4500;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem !important;
+        }
+
+        .mt-4 {
+            margin-top: 1.5rem !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <!-- Navigation links -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mb-4">
+        <div class="container-fluid">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link bg-info-subtle" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link bg-info-subtle" href="/addPizza">Add Pizza</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link bg-info-subtle" href="/menu">Menu</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <h1 class="text-center">Add Pizza 🍕</h1>
+    <div th:if="${successMessage}" class="alert alert-success">
+        <strong th:text="${successMessage}"></strong>
+    </div>
+    <p class="lead text-center">Add a new pizza to the menu:</p>
+    <form th:action="@{/addPizza}" th:object="${newPizza}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required/>
+        </div>
+        <div class="form-group">
+            <label for="size">Size:</label>
+            <!-- Use a dropdown for size -->
+            <select class="form-control" id="size" th:field="*{size}" required>
+                <option value="SMALL">Small</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="LARGE">Large</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" th:field="*{price}" required/>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Add Pizza</button>
+    </form>
+    <a th:href="@{/menu}" class="btn btn-secondary mt-4">Back to Menu</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Pizza | Pizza Creed</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('/images/edit-pizza.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin-left: 0;
+        }
+
+        h1 {
+            color: #0d6efd;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 5px rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+
+    <h1 class="text-center text-primary">Edit Pizza</h1>
+    <form th:action="@{'/editPizza/' + ${pizza.id}}" th:object="${pizza}" method="post">
+        <div class="form-group">
+            <label for="name" class="form-label">Pizza Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" th:value="${pizza.name}" required>
+        </div>
+        <div class="form-group">
+            <label for="size" class="form-label">Pizza Size</label>
+            <select class="form-control" id="size" th:field="*{size}" required>
+                <option value="SMALL" th:selected="${pizza.size == 'SMALL'}">Small</option>
+                <option value="MEDIUM" th:selected="${pizza.size == 'MEDIUM'}">Medium</option>
+                <option value="LARGE" th:selected="${pizza.size == 'LARGE'}">Large</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price" class="form-label">Pizza Price</label>
+            <input type="number" class="form-control" id="price" th:field="*{price}" th:value="${pizza.price}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+</body>
+</html>
